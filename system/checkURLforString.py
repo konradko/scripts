@@ -1,4 +1,4 @@
-﻿# Checks if url object contains the specified string and returns value for Hostmonitor
+﻿# Checks if url object contains the specified string
 import urllib
 
 
