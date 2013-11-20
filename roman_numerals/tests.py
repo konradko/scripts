@@ -19,7 +19,8 @@ class TestConvertRomanNumerals(unittest.TestCase):
                                 1988: 'MCMLXXXVIII',
                                 1999: 'MCMXCIX',
                                 2000: 'MM',
-                                2013: 'MMXIII'
+                                2013: 'MMXIII',
+                                3999: 'MMMCMXCIX'
                                 }
     
     def setUp(self):

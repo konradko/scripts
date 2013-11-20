@@ -25,6 +25,19 @@ class RomanNumeralsConverter:
         next_arabic = sorted_values[sorted_values.index(self.roman_to_arabic[roman_symbol]) - 1]
         return self.arabic_to_roman(next_arabic)
 
+    def substract_roman(self, roman_string):
+        for roman in self.roman_to_arabic:
+            four_in_row = 4 * roman
+            if four_in_row in roman_string:
+                symbol_to_the_left = roman_string[roman_string.find(four_in_row) - 1]
+                next_symbol = self.get_next_symbol(roman)
+                if self.roman_to_arabic[symbol_to_the_left] > self.roman_to_arabic[next_symbol]:
+                    substracted = roman + next_symbol
+                    roman_string = roman_string.replace(four_in_row, substracted)
+                else:
+                    substracted = roman + self.get_next_symbol(next_symbol)
+                    roman_string = roman_string.replace(next_symbol + four_in_row, substracted)
+        return roman_string
 
     def get_arabic_numeral(self, input_number):
         arabic_numeral = 0
@@ -40,20 +53,6 @@ class RomanNumeralsConverter:
             previous = current
         return arabic_numeral
 
-    def substract_roman(self, roman_string):
-        for roman in self.roman_to_arabic:
-            four_in_row = 4 * roman
-            if four_in_row in roman_string:
-                symbol_to_the_left = roman_string[roman_string.find(four_in_row) - 1]
-                next_symbol = self.get_next_symbol(roman)
-                if self.roman_to_arabic[symbol_to_the_left] > self.roman_to_arabic[next_symbol]:
-                    substracted = roman + next_symbol
-                    roman_string = roman_string.replace(four_in_row, substracted)
-                else:
-                    substracted = roman + self.get_next_symbol(next_symbol)
-                    roman_string = roman_string.replace(next_symbol + four_in_row, substracted)
-        return roman_string
-
     def get_roman_numeral(self, arabic_number):
         roman_string = ''
         for arabic in sorted(self.roman_to_arabic.values(), reverse=True):
@@ -61,3 +60,8 @@ class RomanNumeralsConverter:
                 arabic_number -= arabic
                 roman_string += self.arabic_to_roman(arabic)
         return self.substract_roman(roman_string)
+
+if __name__ == "__main__":
+    converter = RomanNumeralsConverter()
+    for i in range(1, 2130):
+        print converter.get_roman_numeral(i)
